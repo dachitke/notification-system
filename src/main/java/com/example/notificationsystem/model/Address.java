@@ -1,5 +1,6 @@
 package com.example.notificationsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,8 +13,9 @@ public class Address {
     private String type;  // e.g., "email", "sms", "postal"
     private String value; // the actual email address, phone number, postal address, etc.
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonBackReference
     private Customer customer;
 
     public Address() {}

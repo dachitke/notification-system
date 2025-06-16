@@ -1,5 +1,6 @@
 package com.example.notificationsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class Customer {
     private int phone;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Address> addresses = new ArrayList<>();
 
     public Customer() {}
