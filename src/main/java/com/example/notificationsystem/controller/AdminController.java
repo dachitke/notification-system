@@ -28,7 +28,7 @@ public class AdminController {
         this.jwtUtil = jwtUtil;
     }
 
-    // ✅ Register a new admin
+
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Admin admin) {
         if (admin.getUsername() == null || admin.getPassword() == null) {
@@ -44,7 +44,7 @@ public class AdminController {
         return ResponseEntity.ok(savedAdmin);
     }
 
-    // ✅ Login and return JWT token
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Admin loginData) {
         if (loginData.getUsername() == null || loginData.getPassword() == null) {
