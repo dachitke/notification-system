@@ -2,6 +2,7 @@ package com.example.notificationsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Entity
 public class Preference {
@@ -18,6 +19,11 @@ public class Preference {
     @JoinColumn(name = "customer_id", unique = true)
     @JsonBackReference
     private Customer customer;
+
+
+
+
+
 
 
 

@@ -1,51 +1,51 @@
 package com.example.notificationsystem.controller;
 
 import com.example.notificationsystem.model.Customer;
-import com.example.notificationsystem.repository.CustomerRepository;
+import com.example.notificationsystem.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     @GetMapping
     public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+        return customerService.getAllCustomers();
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerRepository.save(customer);
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        Customer saved = customerService.createCustomer(customer);
+        return ResponseEntity.ok(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(
+    public ResponseEntity<Optional<Customer>> updateCustomer(
             @PathVariable Long id,
             @RequestBody Customer updatedCustomer) {
-        return customerRepository.findById(id)
-                .map(customer -> {
-                    customer.setName(updatedCustomer.getName());
-                    customer.setLastName(updatedCustomer.getLastName());
-                    customer.setPhone(updatedCustomer.getPhone());
-                    customer.setEmail(updatedCustomer.getEmail());
-                    Customer savedCustomer = customerRepository.save(customer);
-                    return ResponseEntity.ok(savedCustomer);
-                }).orElseGet(() -> ResponseEntity.notFound().build());
+        Optional<Customer> updated = Optional.ofNullable(customerService.updateCustomer(id, updatedCustomer));
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
-        if (!customerRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+        if (customerService.deleteCustomer(id)) {
+            return ResponseEntity.noContent().build();
         }
-        customerRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/batch")
+    public ResponseEntity<List<Customer>> batchUpdateCustomers(@RequestBody List<Customer> customers) {
+        List<Customer> updatedCustomers = customerService.batchUpdateCustomers(customers);
+        return ResponseEntity.ok(updatedCustomers);
     }
 }
