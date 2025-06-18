@@ -9,9 +9,11 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class NotificationService {
+
     @Autowired
     private NotificationRepository repository;
 
@@ -28,7 +30,9 @@ public class NotificationService {
     }
 
     public Notification saveNotification(Notification notification) {
-        notification.setSentAt(LocalDateTime.now());
+        if (notification.getSentAt() == null) {
+            notification.setSentAt(LocalDateTime.now());
+        }
         return repository.save(notification);
     }
 
@@ -39,5 +43,41 @@ public class NotificationService {
             report.put((String) obj[0], (Long) obj[1]);
         }
         return report;
+    }
+
+    public Map<String, Object> getFullDeliveryReport() {
+        List<Notification> all = repository.findAll();
+        long total = all.size();
+        long delivered = all.stream().filter(n -> "DELIVERED".equalsIgnoreCase(n.getStatus())).count();
+        long failed = all.stream().filter(n -> "FAILED".equalsIgnoreCase(n.getStatus())).count();
+        long pending = all.stream().filter(n -> "PENDING".equalsIgnoreCase(n.getStatus())).count();
+
+        double successRate = total == 0 ? 0.0 : (delivered * 100.0) / total;
+
+        Map<String, Object> report = new HashMap<>();
+        report.put("total", total);
+        report.put("delivered", delivered);
+        report.put("failed", failed);
+        report.put("pending", pending);
+        report.put("successRate", successRate);
+
+        return report;
+    }
+
+    public Optional<Notification> getNotificationById(Long id) {
+        return repository.findById(id);
+    }
+
+    public void deleteNotification(Long id) {
+        repository.deleteById(id);
+    }
+
+    public List<Notification> getFilteredNotifications(String status, String customerId) {
+        List<Notification> all = repository.findAll();
+
+        return all.stream()
+                .filter(n -> status == null || n.getStatus().equalsIgnoreCase(status))
+                .filter(n -> customerId == null || n.getCustomerId().equalsIgnoreCase(customerId))
+                .toList();
     }
 }

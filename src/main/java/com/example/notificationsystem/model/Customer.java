@@ -37,7 +37,7 @@ public class Customer {
         this.phone = phone;
     }
 
-    // --- Getters and Setters ---
+
 
     public Long getId() {
         return id;

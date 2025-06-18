@@ -48,4 +48,21 @@ public class CustomerController {
         List<Customer> updatedCustomers = customerService.batchUpdateCustomers(customers);
         return ResponseEntity.ok(updatedCustomers);
     }
+
+    // ✅ NEW: Search, filter, and sort customers
+    @GetMapping("/search")
+    public ResponseEntity<List<Customer>> searchCustomers(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String channel,
+            @RequestParam(required = false) Boolean smsOptIn,
+            @RequestParam(required = false) Boolean emailOptIn,
+            @RequestParam(required = false, defaultValue = "id") String sortBy,
+            @RequestParam(required = false, defaultValue = "asc") String order
+    ) {
+        return ResponseEntity.ok(customerService.searchCustomers(
+                name, lastName, email, channel, smsOptIn, emailOptIn, sortBy, order));
+    }
+
 }
