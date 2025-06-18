@@ -46,23 +46,24 @@ public class NotificationService {
     }
 
     public Map<String, Object> getFullDeliveryReport() {
-        List<Notification> all = repository.findAll();
+        Map<String, Object> report = new HashMap<>();
+
+        List<Notification> all = getAllNotifications();
+
         long total = all.size();
         long delivered = all.stream().filter(n -> "DELIVERED".equalsIgnoreCase(n.getStatus())).count();
         long failed = all.stream().filter(n -> "FAILED".equalsIgnoreCase(n.getStatus())).count();
         long pending = all.stream().filter(n -> "PENDING".equalsIgnoreCase(n.getStatus())).count();
 
-        double successRate = total == 0 ? 0.0 : (delivered * 100.0) / total;
-
-        Map<String, Object> report = new HashMap<>();
         report.put("total", total);
         report.put("delivered", delivered);
         report.put("failed", failed);
         report.put("pending", pending);
-        report.put("successRate", successRate);
+        report.put("details", all); // optional, includes full list of notifications
 
         return report;
     }
+
 
     public Optional<Notification> getNotificationById(Long id) {
         return repository.findById(id);
