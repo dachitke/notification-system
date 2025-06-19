@@ -1,6 +1,8 @@
-# Croco Notification System - Backend
+# Croco Notification System
 
-A complete Node.js backend API for the Croco Notification System that provides customer management and notification tracking capabilities.
+A modern notification management system with JWT authentication, customer management, and real-time notification dashboard.
+
+## Features Complete ✅
 
 ## 🚀 Quick Start
 
