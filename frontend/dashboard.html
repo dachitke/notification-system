@@ -41,11 +41,32 @@
   </div>
 
   <div class="notifications-section" id="notificationsSection" style="display:none;">
-    <h2>Notifications</h2>
+    <div class="notifications-header">
+      <h2>Notifications</h2>
+      <button id="addNotificationBtn" class="add-customer-btn">Add Notification</button>
+      <div class="notif-filters">
+        <label class="filter-label">Filter by Status:</label>
+        <div class="status-filter-buttons">
+          <button class="status-filter-btn active" data-status="ALL">All</button>
+          <button class="status-filter-btn" data-status="PENDING">Pending</button>
+          <button class="status-filter-btn" data-status="DELIVERED">Delivered</button>
+          <button class="status-filter-btn" data-status="FAILED">Failed</button>
+        </div>
+      </div>
+    </div>
     <div class="notif-status-rect-row">
-      <div class="notif-status-rect pending">Pending</div>
-      <div class="notif-status-rect failed">Failed</div>
-      <div class="notif-status-rect delivered">Delivered</div>
+      <div class="notif-status-rect pending">
+        <div class="notif-status-label">Pending</div>
+        <div class="notif-status-number">0</div>
+      </div>
+      <div class="notif-status-rect failed">
+        <div class="notif-status-label">Failed</div>
+        <div class="notif-status-number">0</div>
+      </div>
+      <div class="notif-status-rect delivered">
+        <div class="notif-status-label">Delivered</div>
+        <div class="notif-status-number">0</div>
+      </div>
       <div class="notif-status-rect successrate">
         <div class="notif-success-ring">
           <svg width="54" height="54"><circle cx="27" cy="27" r="24" stroke="#e5e7eb" stroke-width="6" fill="none"/><circle id="notifSuccessCircle" cx="27" cy="27" r="24" stroke="#22c55e" stroke-width="6" fill="none" stroke-dasharray="150.72" stroke-dashoffset="150.72" stroke-linecap="round"/></svg>
@@ -53,6 +74,25 @@
         </div>
         <div class="notif-success-label">Success Rate</div>
       </div>
+    </div>
+    
+    <!-- Notifications Table -->
+    <div id="notificationsTableContainer" style="margin-top: 2rem;">
+      <table class="notif-table" id="notificationsTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Customer ID</th>
+            <th>Channel</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Sent At</th>
+          </tr>
+        </thead>
+        <tbody id="notificationsTableBody">
+          <!-- Notifications will be populated here -->
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -64,21 +104,57 @@
       <form id="addCustomerForm" class="input-form">
         <div class="input-group">
           <label for="addFirstName">First Name</label>
-          <input type="text" id="addFirstName" name="firstName" required />
+          <input type="text" id="addFirstName" name="firstName" autocomplete="given-name" required />
         </div>
         <div class="input-group">
           <label for="addLastName">Last Name</label>
-          <input type="text" id="addLastName" name="lastName" required />
+          <input type="text" id="addLastName" name="lastName" autocomplete="family-name" required />
         </div>
         <div class="input-group">
           <label for="addEmail">Email</label>
-          <input type="email" id="addEmail" name="email" required />
+          <input type="email" id="addEmail" name="email" autocomplete="email" required />
         </div>
         <div class="input-group">
           <label for="addPhone">Phone</label>
-          <input type="text" id="addPhone" name="phone" required />
+          <input type="text" id="addPhone" name="phone" autocomplete="tel" required />
         </div>
         <button type="submit" class="add-btn">Add</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Notification Modal -->
+  <div id="addNotificationModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close" id="closeAddNotificationModal">&times;</span>
+      <h3>Add Notification</h3>
+      <form id="addNotificationForm" class="input-form">
+        <div class="input-group">
+          <label for="addCustomerId">Customer ID</label>
+          <input type="text" id="addCustomerId" name="customerId" placeholder="e.g., CUST001" required />
+        </div>
+        <div class="input-group">
+          <label for="addChannel">Channel</label>
+          <select id="addChannel" name="channel" required>
+            <option value="">Select Channel</option>
+            <option value="EMAIL">Email</option>
+            <option value="SMS">SMS</option>
+            <option value="PUSH">Push Notification</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="addMessage">Message</label>
+          <textarea id="addMessage" name="message" placeholder="Enter notification message..." rows="4" required></textarea>
+        </div>
+        <div class="input-group">
+          <label for="addStatus">Status</label>
+          <select id="addStatus" name="status" required>
+            <option value="PENDING">Pending</option>
+            <option value="DELIVERED">Delivered</option>
+            <option value="FAILED">Failed</option>
+          </select>
+        </div>
+        <button type="submit" class="add-btn">Add Notification</button>
       </form>
     </div>
   </div>
@@ -129,19 +205,37 @@
   <script src="notifications.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
+    console.log('Setting up dark mode toggle...');
+    
     var btn = document.getElementById('darkModeToggle');
     if (btn) {
+      console.log('Dark mode button found!');
+      
+      // Clear any existing event listeners by cloning the button
+      var newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      btn = newBtn;
+      
+      // Add single event listener
       btn.addEventListener('click', function() {
+        console.log('Dark mode button clicked!');
         document.body.classList.toggle('dark-mode');
-        btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? '1' : '0');
-        console.log('Dark mode toggled!');
+        var isDark = document.body.classList.contains('dark-mode');
+        btn.textContent = isDark ? '☀️' : '🌙';
+        localStorage.setItem('darkMode', isDark ? '1' : '0');
+        console.log('Dark mode:', isDark ? 'enabled' : 'disabled');
       });
+      
       // Set initial state
-      if (localStorage.getItem('darkMode') === '1') {
+      var isDarkStored = localStorage.getItem('darkMode') === '1';
+      if (isDarkStored) {
         document.body.classList.add('dark-mode');
         btn.textContent = '☀️';
+      } else {
+        document.body.classList.remove('dark-mode');
+        btn.textContent = '🌙';
       }
+      console.log('Initial dark mode state:', isDarkStored);
     } else {
       console.log('Dark mode button not found!');
     }

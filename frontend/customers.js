@@ -1,4 +1,7 @@
-const backendUrl = 'http://localhost:8080';
+// Set global backendUrl if it doesn't exist
+if (typeof window.backendUrl === 'undefined') {
+  window.backendUrl = 'http://localhost:8080';
+}
 
 let allCustomers = [];
 
@@ -11,7 +14,7 @@ async function fetchCustomers() {
   }
 
   try {
-    const response = await fetch(`${backendUrl}/api/customers`, {
+    const response = await fetch(`${window.backendUrl}/api/customers`, {
       headers: {
         'Authorization': `Bearer ${token.trim()}`,
         'Content-Type': 'application/json',
@@ -67,7 +70,7 @@ async function searchCustomers(query) {
   params.append(param.key, param.value);
 
   try {
-    const response = await fetch(`${backendUrl}/api/customers/search?${params.toString()}`, {
+    const response = await fetch(`${window.backendUrl}/api/customers/search?${params.toString()}`, {
       headers: {
         'Authorization': `Bearer ${token.trim()}`,
         'Content-Type': 'application/json',
@@ -169,7 +172,7 @@ function setupAddCustomerModal() {
     };
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`${backendUrl}/api/customers`, {
+      const res = await fetch(`${window.backendUrl}/api/customers`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

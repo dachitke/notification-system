@@ -206,7 +206,8 @@ body {
 }
 .input-form input[type="text"],
 .input-form input[type="email"],
-.input-form textarea {
+.input-form textarea,
+.input-form select {
   border: 1px solid #a7f3d0;
   border-radius: 6px;
   padding: 10px 12px;
@@ -214,10 +215,12 @@ body {
   background: #f0fdfa;
   transition: border 0.2s;
   color: #111;
+  font-family: Arial, sans-serif;
 }
 .input-form input[type="text"]:focus,
 .input-form input[type="email"]:focus,
-.input-form textarea:focus {
+.input-form textarea:focus,
+.input-form select:focus {
   border: 1.5px solid #22c55e;
   outline: none;
   background: #fff;
@@ -626,6 +629,21 @@ body {
   text-align: center;
   box-shadow: 0 2px 8px rgba(34,197,94,0.07);
   letter-spacing: 0.01em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.notif-status-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.notif-status-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
 }
 .notif-status-rect.pending {
   background: #fef9c3;
@@ -648,8 +666,9 @@ body {
   align-items: center;
   justify-content: center;
   min-width: 120px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(34,197,94,0.13);
+  background: #dbeafe;
+  border: 1.5px solid #3b82f6;
+  box-shadow: 0 2px 8px rgba(59,130,246,0.13);
   padding: 1.1rem 1.2rem;
   gap: 0.2rem;
 }
@@ -666,7 +685,7 @@ body {
   transform: translate(-50%, -50%);
   font-size: 1.1rem;
   font-weight: 700;
-  color: #16a34a;
+  color: #3b82f6;
 }
 .notif-success-label {
   color: #111;
@@ -819,23 +838,27 @@ body.dark-mode .customers-section h2 {
 }
 body.dark-mode .input-form input[type="text"],
 body.dark-mode .input-form input[type="email"],
-body.dark-mode .input-form textarea {
+body.dark-mode .input-form textarea,
+body.dark-mode .input-form select {
   background: #181f1b;
   border: 1.5px solid #22c55e;
+  color: #fff;
 }
 body.dark-mode .input-form input[type="text"]:focus,
 body.dark-mode .input-form input[type="email"]:focus,
-body.dark-mode .input-form textarea:focus {
+body.dark-mode .input-form textarea:focus,
+body.dark-mode .input-form select:focus {
   background: #101c13;
   color: #fff;
   border: 1.5px solid #22c55e;
 }
 body.dark-mode .notif-status-rect.successrate {
-  background: #181f1b;
-  color: #fff;
+  background: #1e3a8a;
+  color: #dbeafe;
+  border: 1.5px solid #60a5fa;
 }
 body.dark-mode .notif-success-label {
-  color: #fff;
+  color: #dbeafe;
 }
 
 .add-customer-btn {
@@ -932,4 +955,212 @@ body.dark-mode .add-customer-btn {
 body.dark-mode .add-customer-btn:hover {
   background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%);
   color: #fff;
+}
+
+body.dark-mode .modal-content h3 {
+  color: #fff;
+}
+
+body.dark-mode .input-form .input-group label {
+  color: #fff;
+}
+
+body.dark-mode .input-form select option {
+  background: #181f1b;
+  color: #fff;
+}
+
+body.dark-mode .input-form select option[value=""] {
+  color: #a7f3d0;
+  opacity: 0.8;
+}
+
+body.dark-mode .input-form select {
+  color: #a7f3d0;
+}
+
+body.dark-mode .input-form select:not([value=""]) {
+  color: #fff;
+}
+
+body.dark-mode .input-form input::placeholder,
+body.dark-mode .input-form textarea::placeholder {
+  color: #a7f3d0;
+  opacity: 0.8;
+}
+
+/* Status dropdown styling */
+.status-dropdown {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  min-width: 100px;
+}
+
+.status-dropdown:hover {
+  border-color: #22c55e;
+}
+
+.status-dropdown:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.1);
+}
+
+.status-dropdown:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Message cell styling */
+.message-cell {
+  max-width: 200px;
+  word-wrap: break-word;
+  font-style: italic;
+  color: #6b7280;
+}
+
+/* Notification table improvements */
+.notif-table th:last-child,
+.notif-table td:last-child {
+  text-align: center;
+  width: 120px;
+}
+
+/* Dark mode for status dropdown */
+body.dark-mode .status-dropdown {
+  background: #181f1b;
+  border: 1px solid #22c55e;
+  color: #e5ffe5;
+}
+
+body.dark-mode .status-dropdown:hover {
+  border-color: #16a34a;
+}
+
+body.dark-mode .status-dropdown:focus {
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+}
+
+body.dark-mode .status-dropdown:disabled {
+  background: #10291a;
+  color: #6b7280;
+}
+
+body.dark-mode .message-cell {
+  color: #9ca3af;
+}
+
+/* Notifications header and filters */
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.notifications-header h2 {
+  margin: 0;
+  color: #111;
+}
+
+.notif-filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter-label {
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.status-filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.status-filter-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.status-filter-btn:hover {
+  background: #e5e7eb;
+  border-color: #22c55e;
+}
+
+.status-filter-btn.active {
+  background: #22c55e;
+  color: white;
+  border-color: #22c55e;
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+}
+
+.status-filter-btn.active:hover {
+  background: #16a34a;
+}
+
+/* Dark mode for notification filters */
+body.dark-mode .notifications-header h2 {
+  color: #e5ffe5;
+}
+
+body.dark-mode .filter-label {
+  color: #e5ffe5;
+}
+
+body.dark-mode .status-filter-btn {
+  background: #181f1b;
+  color: #e5ffe5;
+  border-color: #22c55e;
+}
+
+body.dark-mode .status-filter-btn:hover {
+  background: #10291a;
+  border-color: #16a34a;
+}
+
+body.dark-mode .status-filter-btn.active {
+  background: #22c55e;
+  color: #111;
+}
+
+/* Animation keyframes for status messages */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }

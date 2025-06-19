@@ -1,4 +1,7 @@
-const backendUrl = 'http://localhost:8080';
+// Set global backendUrl if it doesn't exist
+if (typeof window.backendUrl === 'undefined') {
+  window.backendUrl = 'http://localhost:8080';
+}
 
 function getCustomerIdFromUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -13,7 +16,7 @@ async function fetchCustomer(id) {
     return;
   }
   try {
-    const response = await fetch(`${backendUrl}/api/customers/${id}`, {
+    const response = await fetch(`${window.backendUrl}/api/customers/${id}`, {
       headers: {
         'Authorization': `Bearer ${token.trim()}`,
         'Content-Type': 'application/json',
@@ -54,7 +57,7 @@ async function updateCustomer(id, data) {
   const token = localStorage.getItem('token');
   if (!token) return;
   try {
-    const response = await fetch(`${backendUrl}/api/customers/${id}`, {
+    const response = await fetch(`${window.backendUrl}/api/customers/${id}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token.trim()}`,
@@ -77,7 +80,7 @@ async function deleteCustomer(id) {
   if (!token) return;
   if (!confirm('Are you sure you want to delete this customer?')) return;
   try {
-    const response = await fetch(`${backendUrl}/api/customers/${id}`, {
+    const response = await fetch(`${window.backendUrl}/api/customers/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token.trim()}`,

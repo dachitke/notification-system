@@ -1,4 +1,7 @@
-const backendUrl = 'http://localhost:8080';
+// Set global backendUrl if it doesn't exist
+if (typeof window.backendUrl === 'undefined') {
+  window.backendUrl = 'http://localhost:8080';
+}
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -7,7 +10,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value.trim();
 
   try {
-    const response = await fetch(`${backendUrl}/api/admins/login`, {
+    const response = await fetch(`${window.backendUrl}/api/admins/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
