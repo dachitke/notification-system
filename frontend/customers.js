@@ -91,6 +91,7 @@ function renderCustomers(customers) {
   const container = document.getElementById('customers-container');
   container.innerHTML = '';
 
+  // Create table for desktop/tablet
   const table = document.createElement('table');
 
   const headerRow = document.createElement('tr');
@@ -122,6 +123,46 @@ function renderCustomers(customers) {
   });
 
   container.appendChild(table);
+
+  // Create mobile cards
+  renderCustomerMobileCards(customers, container);
+}
+
+function renderCustomerMobileCards(customers, container) {
+  // Create mobile cards container
+  const mobileContainer = document.createElement('div');
+  mobileContainer.className = 'customers-mobile-cards';
+
+  customers.forEach(customer => {
+    const card = document.createElement('div');
+    card.className = 'customer-card';
+    card.addEventListener('click', () => {
+      window.location.href = `customer-details.html?id=${encodeURIComponent(customer.id)}`;
+    });
+
+    const fullName = [customer.firstName || customer.name || '', customer.lastName || ''].filter(Boolean).join(' ');
+
+    card.innerHTML = `
+      <div class="customer-card-header">
+        <div class="customer-card-name">${fullName || 'No Name'}</div>
+        <div class="customer-card-id">${customer.id || ''}</div>
+      </div>
+      <div class="customer-card-body">
+        <div class="customer-card-row">
+          <span class="customer-card-label">Email:</span>
+          <span class="customer-card-value">${customer.email || 'No email'}</span>
+        </div>
+        <div class="customer-card-row">
+          <span class="customer-card-label">Phone:</span>
+          <span class="customer-card-value">${customer.phone || 'No phone'}</span>
+        </div>
+      </div>
+    `;
+
+    mobileContainer.appendChild(card);
+  });
+
+  container.appendChild(mobileContainer);
 }
 
 function setupSearchBar() {

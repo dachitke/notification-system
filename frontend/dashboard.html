@@ -28,8 +28,8 @@
 
   <div class="customers-section" id="customersSection">
     <div class="customers-header">
-      <h2>Customers</h2>
       <button id="addCustomerBtn" class="add-customer-btn">Add Customer</button>
+      <h2>Customers</h2>
       <div class="search-bar">
         <input type="text" id="customerSearchInput" placeholder="Search customers..." />
         <button id="customerSearchBtn" title="Search">
@@ -42,8 +42,8 @@
 
   <div class="notifications-section" id="notificationsSection" style="display:none;">
     <div class="notifications-header">
-      <h2>Notifications</h2>
       <button id="addNotificationBtn" class="add-customer-btn">Add Notification</button>
+      <h2>Notifications</h2>
       <div class="notif-filters">
         <label class="filter-label">Filter by Status:</label>
         <div class="status-filter-buttons">
@@ -78,21 +78,23 @@
     
     <!-- Notifications Table -->
     <div id="notificationsTableContainer" style="margin-top: 2rem;">
-      <table class="notif-table" id="notificationsTable">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Customer ID</th>
-            <th>Channel</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Sent At</th>
-          </tr>
-        </thead>
-        <tbody id="notificationsTableBody">
-          <!-- Notifications will be populated here -->
-        </tbody>
-      </table>
+      <div class="notif-table-wrap">
+        <table class="notif-table" id="notificationsTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer ID</th>
+              <th>Channel</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Sent At</th>
+            </tr>
+          </thead>
+          <tbody id="notificationsTableBody">
+            <!-- Notifications will be populated here -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 

@@ -336,8 +336,57 @@ function renderNotificationsTable(notifications) {
     </tr>
   `).join('');
   
+  // Create mobile cards
+  renderMobileCards(notifications);
+  
   // Add event listeners to status dropdowns
   attachStatusDropdownListeners();
+}
+
+function renderMobileCards(notifications) {
+  // Check if mobile cards container exists, if not create it
+  let mobileContainer = document.getElementById('notificationsMobileCards');
+  if (!mobileContainer) {
+    const tableContainer = document.getElementById('notificationsTableContainer');
+    if (tableContainer) {
+      mobileContainer = document.createElement('div');
+      mobileContainer.id = 'notificationsMobileCards';
+      mobileContainer.className = 'notif-mobile-cards';
+      tableContainer.appendChild(mobileContainer);
+    } else {
+      return;
+    }
+  }
+  
+  // Create mobile card HTML
+  mobileContainer.innerHTML = notifications.map(n => `
+    <div class="notif-card" data-notification-id="${n.id || ''}">
+      <div class="notif-card-header">
+        <div class="notif-card-id">ID: ${n.id || ''}</div>
+        <span class="notif-card-status ${(n.status || '').toLowerCase()}">${n.status || ''}</span>
+      </div>
+      <div class="notif-card-body">
+        <div class="notif-card-row">
+          <span class="notif-card-label">Customer:</span>
+          <span class="notif-card-value">${n.customerId || ''}</span>
+        </div>
+        <div class="notif-card-row">
+          <span class="notif-card-label">Channel:</span>
+          <span class="notif-card-value">${n.channel || ''}</span>
+        </div>
+        <div class="notif-card-row">
+          <span class="notif-card-label">Sent:</span>
+          <span class="notif-card-value">${n.sentAt ? n.sentAt.replace('T', ' ').slice(0, 16) : ''}</span>
+        </div>
+        ${n.message ? `
+        <div class="notif-card-row">
+          <span class="notif-card-label">Message:</span>
+        </div>
+        <div class="notif-card-message">"${n.message}"</div>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
 }
 
 async function loadNotificationsDashboard() {
