@@ -59,9 +59,19 @@ public class NotificationService {
         report.put("delivered", delivered);
         report.put("failed", failed);
         report.put("pending", pending);
-        report.put("details", all); // optional, includes full list of notifications
+        report.put("details", all);
 
         return report;
+    }
+    public Notification updateNotificationStatus(Long id, String status) {
+        Optional<Notification> notificationOpt = repository.findById(id);
+        if (notificationOpt.isPresent()) {
+            Notification notification = notificationOpt.get();
+            notification.setStatus(status.toUpperCase());
+            notification.setSentAt(LocalDateTime.now());
+            return repository.save(notification);
+        }
+        throw new RuntimeException("Notification not found with id: " + id);
     }
 
 

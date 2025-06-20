@@ -40,7 +40,7 @@ public class AddressService {
         return false;
     }
 
-    // Batch update addresses - only updates addresses with IDs
+
     public List<Address> batchUpdateAddresses(List<Address> addresses) {
         return addresses.stream()
                 .filter(a -> a.getId() != null)
