@@ -28,9 +28,14 @@ public class AddressService {
                 .map(address -> {
                     address.setType(updatedAddress.getType());
                     address.setValue(updatedAddress.getValue());
+                    address.setStreet(updatedAddress.getStreet());
+                    address.setCity(updatedAddress.getCity());
+                    address.setCountry(updatedAddress.getCountry());
                     return addressRepository.save(address);
                 }).orElse(null);
     }
+
+
 
     public boolean deleteAddress(Long id) {
         if (addressRepository.existsById(id)) {
