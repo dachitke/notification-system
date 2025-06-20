@@ -10,8 +10,8 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type;  // e.g., "email", "sms", "postal"
-    private String value; // the actual email address, phone number, postal address, etc.
+    private String type;
+    private String value;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

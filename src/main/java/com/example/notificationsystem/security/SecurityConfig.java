@@ -63,7 +63,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // ✅ Inlined CORS config for Spring Security 6+
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

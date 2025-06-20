@@ -21,6 +21,13 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        Optional<Customer> customer = customerService.getCustomerById(id);
+        return customer.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         Customer saved = customerService.createCustomer(customer);
@@ -49,7 +56,6 @@ public class CustomerController {
         return ResponseEntity.ok(updatedCustomers);
     }
 
-    // ✅ NEW: Search, filter, and sort customers
     @GetMapping("/search")
     public ResponseEntity<List<Customer>> searchCustomers(
             @RequestParam(required = false) String name,
@@ -64,5 +70,4 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.searchCustomers(
                 name, lastName, email, channel, smsOptIn, emailOptIn, sortBy, order));
     }
-
 }

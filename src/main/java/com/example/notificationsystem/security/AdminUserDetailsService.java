@@ -23,7 +23,7 @@ public class AdminUserDetailsService implements UserDetailsService {
 
         return org.springframework.security.core.userdetails.User.withUsername(admin.getUsername())
                 .password(admin.getPassword())
-                .authorities("ROLE_ADMIN") // Add roles if needed
+                .authorities("ROLE_ADMIN")
                 .build();
     }
 }

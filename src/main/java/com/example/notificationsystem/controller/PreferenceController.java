@@ -20,7 +20,7 @@ public class PreferenceController {
         return "Preferences API is working";
     }
 
-    // Get preference by customer ID
+
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<Preference> getPreferencesByCustomerId(@PathVariable Long customerId) {
         try {
@@ -31,7 +31,7 @@ public class PreferenceController {
         }
     }
 
-    // Create or update preference for a customer using POST
+
     @PostMapping("/customer/{customerId}")
     public ResponseEntity<Preference> createOrUpdatePreferences(
             @PathVariable Long customerId,
@@ -44,7 +44,7 @@ public class PreferenceController {
         }
     }
 
-    // Update preference for a customer using PUT
+
     @PutMapping("/customer/{customerId}")
     public ResponseEntity<Preference> updatePreferencesPut(
             @PathVariable Long customerId,
