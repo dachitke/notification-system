@@ -22,6 +22,7 @@
     <div class="dashboard-nav-tabs">
       <button class="nav-tab active" id="customersTab">Customers</button>
       <button class="nav-tab" id="notificationsTab">Notifications</button>
+      <button class="nav-tab" id="preferencesTab">Reports</button>
       <div class="nav-underline" id="navUnderline"></div>
     </div>
   </nav>
@@ -95,6 +96,41 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </div>
+
+  <div class="preferences-summary-section" id="preferencesSection" style="display:none;">
+    <div class="preferences-summary-header">
+      <h2>Customer Preferences Report</h2>
+      <button id="refreshPreferencesBtn" class="refresh-preferences-btn">Refresh Data</button>
+    </div>
+    
+    <div class="preferences-summary-row">
+      <div class="preferences-summary-card email-opt">
+        <div class="pref-summary-icon">📧</div>
+        <div class="pref-summary-label">Email Opt-In</div>
+        <div class="pref-summary-value" id="emailOptInCount">0</div>
+      </div>
+      
+      <div class="preferences-summary-card sms-opt">
+        <div class="pref-summary-icon">📱</div>
+        <div class="pref-summary-label">SMS Opt-In</div>
+        <div class="pref-summary-value" id="smsOptInCount">0</div>
+      </div>
+      
+      <div class="preferences-summary-card promo-opt">
+        <div class="pref-summary-icon">🎯</div>
+        <div class="pref-summary-label">Promo Opt-In</div>
+        <div class="pref-summary-value" id="promoOptInCount">0</div>
+      </div>
+    </div>
+    
+    <div style="margin-top: 2rem; padding: 1rem; background: #f0fdfa; border-radius: 8px; border-left: 4px solid #22c55e;">
+      <h3 style="margin: 0 0 0.5rem 0; color: #16a34a; font-size: 1.1rem;">📊 Report Summary</h3>
+      <p style="margin: 0; color: #374151; line-height: 1.5;">
+        This report shows the number of customers who have opted in to receive different types of notifications. 
+        Use this data to understand customer engagement preferences and tailor your communication strategy.
+      </p>
     </div>
   </div>
 
@@ -173,8 +209,10 @@
     // Tab navigation logic
     const customersTab = document.getElementById('customersTab');
     const notificationsTab = document.getElementById('notificationsTab');
+    const preferencesTab = document.getElementById('preferencesTab');
     const customersSection = document.getElementById('customersSection');
     const notificationsSection = document.getElementById('notificationsSection');
+    const preferencesSection = document.getElementById('preferencesSection');
 
     // Move underline to active tab
     function updateUnderline() {
@@ -185,26 +223,55 @@
         underline.style.left = activeTab.offsetLeft + 'px';
       }
     }
-    updateUnderline();
-    customersTab.addEventListener('click', () => {
-      customersTab.classList.add('active');
-      notificationsTab.classList.remove('active');
-      customersSection.style.display = '';
+    
+    function hideAllSections() {
+      customersSection.style.display = 'none';
       notificationsSection.style.display = 'none';
+      preferencesSection.style.display = 'none';
+    }
+    
+    function removeAllActiveClasses() {
+      customersTab.classList.remove('active');
+      notificationsTab.classList.remove('active');
+      preferencesTab.classList.remove('active');
+    }
+    
+    updateUnderline();
+    
+    customersTab.addEventListener('click', () => {
+      removeAllActiveClasses();
+      hideAllSections();
+      customersTab.classList.add('active');
+      customersSection.style.display = '';
       updateUnderline();
     });
+    
     notificationsTab.addEventListener('click', () => {
+      removeAllActiveClasses();
+      hideAllSections();
       notificationsTab.classList.add('active');
-      customersTab.classList.remove('active');
-      customersSection.style.display = 'none';
       notificationsSection.style.display = '';
       updateUnderline();
     });
+    
+    preferencesTab.addEventListener('click', () => {
+      removeAllActiveClasses();
+      hideAllSections();
+      preferencesTab.classList.add('active');
+      preferencesSection.style.display = '';
+      updateUnderline();
+      // Load preferences data when tab is clicked
+      loadPreferencesSummary();
+    });
+    
+    // Initially hide non-active sections
     notificationsSection.style.display = 'none';
+    preferencesSection.style.display = 'none';
     window.addEventListener('resize', updateUnderline);
   </script>
   <script src="customers.js"></script>
   <script src="notifications.js"></script>
+  <script src="preferences.js"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     console.log('Setting up dark mode toggle...');

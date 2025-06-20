@@ -382,7 +382,7 @@ body {
   box-shadow: 0 2px 8px rgba(34,197,94,0.08);
   padding: 0.3rem 0.4rem;
   gap: 0.2rem;
-  min-width: 340px;
+  min-width: 420px;
 }
 .nav-tab {
   background: none;
@@ -415,6 +415,119 @@ body {
   font-size: 1.1rem;
   text-align: center;
   margin-top: 2.5rem;
+}
+
+/* Customer Preferences Summary Styles */
+.preferences-summary-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(34,197,94,0.08), 0 1.5px 6px rgba(34,197,94,0.04);
+  padding: 2rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  opacity: 1;
+  transition: opacity 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+.preferences-summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.preferences-summary-header h2 {
+  color: #111;
+  font-weight: 600;
+  margin: 0;
+}
+
+.refresh-preferences-btn {
+  background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(34,197,94,0.08);
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+
+.refresh-preferences-btn:hover {
+  background: linear-gradient(90deg, #15803d 0%, #166534 100%);
+}
+
+.preferences-summary-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.preferences-summary-card {
+  background: #e6f9ed;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(34,197,94,0.07);
+  padding: 1.5rem 2rem;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  flex: 1;
+}
+
+.preferences-summary-card .pref-summary-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.preferences-summary-card .pref-summary-label {
+  color: #111;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.preferences-summary-card .pref-summary-value {
+  color: #16a34a;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0.2rem;
+}
+
+.preferences-summary-card.email-opt {
+  background: #dbeafe;
+  border: 2px solid #3b82f6;
+}
+
+.preferences-summary-card.email-opt .pref-summary-value {
+  color: #3b82f6;
+}
+
+.preferences-summary-card.sms-opt {
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
+}
+
+.preferences-summary-card.sms-opt .pref-summary-value {
+  color: #f59e0b;
+}
+
+.preferences-summary-card.promo-opt {
+  background: #fce7f3;
+  border: 2px solid #ec4899;
+}
+
+.preferences-summary-card.promo-opt .pref-summary-value {
+  color: #ec4899;
 }
 
 /* Notifications Dashboard Styles */
@@ -1003,6 +1116,71 @@ body.dark-mode .input-form textarea::placeholder {
   opacity: 0.8;
 }
 
+/* Dark mode for preferences summary */
+body.dark-mode .preferences-summary-section {
+  background: #181f1b;
+  color: #fff;
+}
+
+body.dark-mode .preferences-summary-header h2 {
+  color: #e5ffe5;
+}
+
+body.dark-mode .refresh-preferences-btn {
+  background: linear-gradient(90deg, #22c55e 0%, #166534 100%);
+  color: #111;
+}
+
+body.dark-mode .refresh-preferences-btn:hover {
+  background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%);
+  color: #fff;
+}
+
+body.dark-mode .preferences-summary-card .pref-summary-label {
+  color: #e5ffe5;
+}
+
+body.dark-mode .preferences-summary-card.email-opt {
+  background: #1e3a8a;
+  border-color: #60a5fa;
+}
+
+body.dark-mode .preferences-summary-card.email-opt .pref-summary-value {
+  color: #60a5fa;
+}
+
+body.dark-mode .preferences-summary-card.sms-opt {
+  background: #451a03;
+  border-color: #fbbf24;
+}
+
+body.dark-mode .preferences-summary-card.sms-opt .pref-summary-value {
+  color: #fbbf24;
+}
+
+body.dark-mode .preferences-summary-card.promo-opt {
+  background: #831843;
+  border-color: #f472b6;
+}
+
+body.dark-mode .preferences-summary-card.promo-opt .pref-summary-value {
+  color: #f472b6;
+}
+
+/* Dark mode for report summary info box */
+body.dark-mode .preferences-summary-section div[style*="background: #f0fdfa"] {
+  background: #10291a !important;
+  border-left-color: #22c55e !important;
+}
+
+body.dark-mode .preferences-summary-section h3 {
+  color: #22c55e !important;
+}
+
+body.dark-mode .preferences-summary-section p {
+  color: #e5ffe5 !important;
+}
+
 /* Status dropdown styling */
 .status-dropdown {
   background: #fff;
@@ -1362,6 +1540,46 @@ body.dark-mode .status-filter-btn.active {
 
   body.dark-mode .customer-card-value {
     color: #e5ffe5;
+  }
+
+  /* Preferences Summary - Mobile */
+  .preferences-summary-section {
+    margin: 1rem;
+    padding: 1.5rem;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .preferences-summary-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .preferences-summary-row {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 0;
+  }
+
+  .preferences-summary-card {
+    flex: none;
+    min-width: unset;
+    width: 85%;
+    max-width: 280px;
+    padding: 1.2rem 1.5rem;
+    margin: 0;
+    align-self: center;
+  }
+
+  .preferences-summary-card .pref-summary-icon {
+    font-size: 1.8rem;
+  }
+
+  .preferences-summary-card .pref-summary-value {
+    font-size: 1.8rem;
   }
 
   /* Notifications Table - Mobile Card Design */
