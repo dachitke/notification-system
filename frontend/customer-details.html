@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Customer Details</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <button id="darkModeToggle" class="darkmode-toggle" title="Toggle dark mode">🌙</button>
+  <div class="customers-section" style="margin-top: 3rem; max-width: 500px;">
+    <h2 style="text-align:center;">Update Customer</h2>
+    <form id="customerForm" class="input-form">
+      <div class="input-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" autocomplete="given-name" required />
+      </div>
+      <div class="input-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" autocomplete="family-name" required />
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" required />
+      </div>
+      <div class="input-group">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone" autocomplete="tel" />
+      </div>
+      <div class="input-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" autocomplete="street-address" />
+      </div>
+      <div class="input-group">
+        <label style="font-weight:600;">Preferences</label>
+        <div class="preferences-row">
+          <div class="preferences-group">
+            <label><input type="checkbox" id="smsOptIn" /> SMS Opt-In</label>
+            <label><input type="checkbox" id="emailOptIn" /> Email Opt-In</label>
+            <label><input type="checkbox" id="promoOptIn" /> Promo Opt-In</label>
+          </div>
+          <div class="preferred-channel-group">
+            <label for="preferredChannel" style="margin-right:0.5rem;">Preferred Channel:</label>
+            <select id="preferredChannel" name="preferredChannel">
+              <option value="">-- Select --</option>
+              <option value="SMS">SMS</option>
+              <option value="EMAIL">EMAIL</option>
+              <option value="PUSH">PUSH</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+        <button type="submit" style="flex:1;">Update</button>
+      </div>
+    </form>
+    <button type="button" id="deleteBtn" class="delete-btn" style="margin-top:2.5rem;">Delete Customer</button>
+    <button onclick="window.history.back()" style="margin-top:2rem; width:100%; background:#6366f1; color:#fff; height:3.2rem; font-size:1.1rem; border-radius:8px;">Back</button>
+  </div>
+  <script src="customer-details.js"></script>
+</body>
+</html> 
