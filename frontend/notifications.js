@@ -616,12 +616,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (addNotificationBtn && addNotificationModal) {
       addNotificationBtn.addEventListener('click', () => {
         addNotificationModal.style.display = 'block';
+        document.body.classList.add('modal-open');
       });
     }
 
     if (closeAddNotificationModal && addNotificationModal) {
       closeAddNotificationModal.addEventListener('click', () => {
         addNotificationModal.style.display = 'none';
+        document.body.classList.remove('modal-open');
         if (addNotificationForm) addNotificationForm.reset();
       });
     }
@@ -630,6 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.addEventListener('click', (event) => {
         if (event.target === addNotificationModal) {
           addNotificationModal.style.display = 'none';
+          document.body.classList.remove('modal-open');
           if (addNotificationForm) addNotificationForm.reset();
         }
       });
@@ -652,6 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const success = await addNotification(notificationData);
         if (success) {
           addNotificationModal.style.display = 'none';
+          document.body.classList.remove('modal-open');
           addNotificationForm.reset();
           showStatusMessage('✅ Notification added successfully!', 'success');
           

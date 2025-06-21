@@ -198,9 +198,20 @@ function setupAddCustomerModal() {
 
   if (!addBtn || !modal || !closeBtn || !form) return;
 
-  addBtn.onclick = () => { modal.style.display = 'flex'; };
-  closeBtn.onclick = () => { modal.style.display = 'none'; };
-  window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+  addBtn.onclick = () => { 
+    modal.style.display = 'flex';
+    document.body.classList.add('modal-open');
+  };
+  closeBtn.onclick = () => { 
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  };
+  window.onclick = (e) => { 
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+  };
 
   form.onsubmit = async (e) => {
     e.preventDefault();
@@ -223,6 +234,7 @@ function setupAddCustomerModal() {
       });
       if (!res.ok) throw new Error('Failed to add customer');
       modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
       form.reset();
       fetchCustomers();
     } catch (err) {

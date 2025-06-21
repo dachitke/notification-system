@@ -1011,21 +1011,27 @@ body.dark-mode .notif-success-label {
   align-items: center;
   justify-content: center;
   position: fixed;
-  z-index: 2000;
+  z-index: 9999;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 .modal-content {
   background: #fff;
   border-radius: 14px;
   padding: 2.2rem 2.2rem 1.5rem 2.2rem;
-  box-shadow: 0 4px 24px rgba(34,197,94,0.13);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
   min-width: 320px;
   max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
   position: relative;
+  z-index: 10000;
+  isolation: isolate;
 }
 .close {
   position: absolute;
@@ -1720,11 +1726,131 @@ body.dark-mode .status-filter-btn.active {
     margin: 1rem;
     max-height: calc(100vh - 2rem);
     overflow-y: auto;
+    position: relative;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  /* Close button improvements for mobile */
+  .close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 28px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 50%;
+    z-index: 10;
+  }
+
+  /* Modal header spacing for close button */
+  .modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    padding-right: 40px; /* Space for close button */
+    font-size: 1.3rem;
+    font-weight: 600;
   }
 
   /* Forms */
   .input-form {
-    gap: 0.8rem;
+    gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Input groups spacing */
+  .input-form .input-group {
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .input-form .input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #374151;
+    width: 100%;
+  }
+
+  /* Textarea specific styling for mobile */
+  .input-form textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    padding: 14px 12px;
+    background: #fff;
+    color: #111;
+    line-height: 1.4;
+    width: 100%;
+    max-width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+
+  .input-form textarea:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    outline: none;
+  }
+  
+  /* Input field improvements for mobile */
+  .input-form input[type="text"],
+  .input-form input[type="email"],
+  .input-form input[type="tel"],
+  .input-form select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 50px; /* Better touch target */
+    padding: 14px 12px;
+    width: 100%;
+    max-width: 100%;
+    border: 2px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+
+  .input-form input[type="text"]:focus,
+  .input-form input[type="email"]:focus,
+  .input-form input[type="tel"]:focus,
+  .input-form select:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    outline: none;
+  }
+  
+  /* Button improvements for mobile */
+  .add-btn {
+    min-height: 52px; /* Better touch target */
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+    margin-top: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .add-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(34, 197, 94, 0.3);
   }
 
   /* Customer Details Page */
@@ -1811,6 +1937,39 @@ body.dark-mode .status-filter-btn.active {
   body.dark-mode .notif-card-status.pending {
     background: #3a3200;
     color: #fde047;
+  }
+
+  /* Dark mode for mobile form elements */
+  body.dark-mode .input-form .input-group label {
+    color: #e5ffe5;
+  }
+
+  body.dark-mode .input-form input[type="text"],
+  body.dark-mode .input-form input[type="email"],
+  body.dark-mode .input-form input[type="tel"],
+  body.dark-mode .input-form select {
+    background: #1f2937;
+    border-color: #374151;
+    color: #e5ffe5;
+  }
+
+  body.dark-mode .input-form input[type="text"]:focus,
+  body.dark-mode .input-form input[type="email"]:focus,
+  body.dark-mode .input-form input[type="tel"]:focus,
+  body.dark-mode .input-form select:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+  }
+
+  body.dark-mode .input-form textarea {
+    background: #1f2937;
+    border-color: #374151;
+    color: #e5ffe5;
+  }
+
+  body.dark-mode .input-form textarea:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
   }
 }
 
@@ -1947,6 +2106,13 @@ body.dark-mode .status-filter-btn.active {
   }
 }
 
+/* Modal body scroll lock */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
 /* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
 @media (hover: none) and (pointer: coarse) {
   /* Increase touch targets */
@@ -1979,6 +2145,109 @@ body.dark-mode .status-filter-btn.active {
   .add-customer-btn:focus {
     outline: 2px solid #22c55e;
     outline-offset: 2px;
+  }
+
+  /* Improve touch scrolling */
+  .modal-content,
+  .customers-section,
+  .notifications-section {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent double-tap zoom on form elements */
+  input, select, textarea, button {
+    touch-action: manipulation;
+  }
+
+  /* Improve tap targets for mobile forms */
+  .input-form input,
+  .input-form select,
+  .input-form textarea {
+    min-height: 48px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  /* Add better visual feedback for touch */
+  .add-btn,
+  .close {
+    -webkit-tap-highlight-color: rgba(34, 197, 94, 0.3);
+  }
+
+  /* Ensure modal is isolated from background on mobile */
+  .modal-content {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* Specific notification form mobile improvements */
+  #addNotificationForm {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  #addNotificationForm .input-group {
+    margin-bottom: 1.2rem;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  #addNotificationForm input,
+  #addNotificationForm select,
+  #addNotificationForm textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  #addNotificationForm select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Improve spacing between form and button */
+  #addNotificationForm .add-btn {
+    margin-top: 1.5rem;
+  }
+
+  /* Form validation styling for mobile */
+  .input-form input:invalid,
+  .input-form select:invalid,
+  .input-form textarea:invalid {
+    border-color: #ef4444;
+  }
+
+  .input-form input:valid,
+  .input-form select:valid,
+  .input-form textarea:valid {
+    border-color: #22c55e;
+  }
+
+  /* Placeholder styling */
+  .input-form input::placeholder,
+  .input-form textarea::placeholder {
+    color: #9ca3af;
+    opacity: 0.8;
+  }
+
+  /* Prevent horizontal overflow on mobile */
+  body, html {
+    overflow-x: hidden;
+  }
+
+  .modal, .modal-content, .input-form, .input-group {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
 
